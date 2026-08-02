@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-apple-light: #F5F5F7;
+    --card-apple-light: #FFFFFF;
+    --border-apple-light: rgba(0, 0, 0, 0.08);
+    --text-primary-light: #1D1D1F;
+    --text-secondary-light: #86868B;
+    --apple-blue: #0071E3;
+    --apple-blue-hover: #0077ED;
+  }
+}
+
+body {
+  background-color: #F5F5F7;
+  color: #1D1D1F;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Plus Jakarta Sans", sans-serif;
+  letter-spacing: -0.015em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Apple-style Light Glassmorphism & Cards */
+.apple-glass-light {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.apple-card-light {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-card-light:hover {
+  border-color: rgba(0, 113, 227, 0.25);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.apple-pill-light {
+  border-radius: 9999px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Minimalist Dark Charcoal Gradient Text for Headlines */
+.apple-gradient-text-light {
+  background: linear-gradient(180deg, #1D1D1F 0%, #424245 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.apple-blue-text-light {
+  background: linear-gradient(135deg, #0071E3 0%, #0056B3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Apple Light Theme Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F5F7;
+}
+::-webkit-scrollbar-thumb {
+  background: #D2D2D7;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #86868B;
+}
