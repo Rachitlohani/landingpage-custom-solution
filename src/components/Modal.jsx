@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { X, CheckCircle2, Send, Lock, Sparkles, FileText, Calendar } from 'lucide-react';
 
+const FORM_NAME = 'access-request';
+
 export default function Modal({ isOpen, onClose, mode = 'deck' }) {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,13 +17,37 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const requestType = mode === 'deck' ? 'Investor Pitch Deck' : 'Product Demo';
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSending(true);
+    setError('');
+
+    // Posts to the static skeleton at public/__forms.html so the submission
+    // reaches Netlify's form handler, which emails the notification recipient.
+    const body = new URLSearchParams(new FormData(e.target)).toString();
+
+    try {
+      const response = await fetch('/__forms.html', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body
+      });
+
+      if (!response.ok) throw new Error(`Request failed (${response.status})`);
+      setSubmitted(true);
+    } catch {
+      setError('We could not send your request just now. Please try again in a moment.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleReset = () => {
     setSubmitted(false);
+    setError('');
+    setFormData({ name: '', email: '', company: '', role: '', note: '' });
     onClose();
   };
 
@@ -68,12 +96,30 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-3.5 mt-6">
+            <form
+              name={FORM_NAME}
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              onSubmit={handleSubmit}
+              className="space-y-3.5 mt-6"
+            >
+              <input type="hidden" name="form-name" value={FORM_NAME} />
+              <input type="hidden" name="request_type" value={requestType} />
+              <input type="hidden" name="subject" value={`New ${requestType} request from ${formData.company || formData.name || 'website visitor'}`} />
+              <p className="hidden">
+                <label>
+                  Don&apos;t fill this out: <input name="bot-field" tabIndex={-1} autoComplete="off" />
+                </label>
+              </p>
+
               <div>
                 <label className="block text-xs font-bold text-[#1D1D1F] mb-1">Full Name *</label>
                 <input
                   required
                   type="text"
+                  name="name"
+                  autoComplete="name"
                   placeholder="e.g. Sarah Jenkins"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -86,6 +132,8 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
                 <input
                   required
                   type="email"
+                  name="email"
+                  autoComplete="email"
                   placeholder="name@company.com or name@fund.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -99,6 +147,8 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
                   <input
                     required
                     type="text"
+                    name="company"
+                    autoComplete="organization"
                     placeholder="Company / Fund Name"
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
@@ -109,6 +159,7 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
                   <label className="block text-xs font-bold text-[#1D1D1F] mb-1">Role / Focus</label>
                   <input
                     type="text"
+                    name="role"
                     placeholder="e.g. GP, VP Trade, CTO"
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
@@ -121,6 +172,7 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
                 <label className="block text-xs font-bold text-[#1D1D1F] mb-1">Message / Note</label>
                 <textarea
                   rows="2"
+                  name="note"
                   placeholder="Any specific focus area or interest..."
                   value={formData.note}
                   onChange={(e) => setFormData({ ...formData, note: e.target.value })}
@@ -128,11 +180,18 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
                 />
               </div>
 
+              {error && (
+                <p className="text-[11px] font-semibold text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-2">
+                  {error}
+                </p>
+              )}
+
               <button
                 type="submit"
-                className="w-full py-3 rounded-full bg-[#0071E3] hover:bg-[#0077ED] text-white font-bold text-xs shadow-md shadow-blue-500/15 flex items-center justify-center gap-2 transition-all mt-4"
+                disabled={sending}
+                className="w-full py-3 rounded-full bg-[#0071E3] hover:bg-[#0077ED] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-xs shadow-md shadow-blue-500/15 flex items-center justify-center gap-2 transition-all mt-4"
               >
-                <span>Submit Request</span>
+                <span>{sending ? 'Sending…' : 'Submit Request'}</span>
                 <Send className="w-3.5 h-3.5" />
               </button>
 

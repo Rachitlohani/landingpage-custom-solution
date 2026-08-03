@@ -1,0 +1,25 @@
+<!doctype html>
+<!--
+  Static skeleton so Netlify's build bot can detect the form used by
+  src/components/Modal.jsx (React renders it client-side, which the bot
+  cannot see). Field names must stay in sync with the modal's submission.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Form detection</title>
+  </head>
+  <body>
+    <form name="access-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="access-request" />
+      <input type="hidden" name="subject" />
+      <input type="hidden" name="request_type" />
+      <input name="name" />
+      <input type="email" name="email" />
+      <input name="company" />
+      <input name="role" />
+      <textarea name="note"></textarea>
+      <input name="bot-field" />
+    </form>
+  </body>
+</html>
