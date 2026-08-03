@@ -4,14 +4,14 @@ import { Users, Sparkles, Mail, Lock, FileText, ArrowRight } from 'lucide-react'
 export default function TeamPage({ onOpenModal }) {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16 space-y-16 text-center">
-      
+
       {/* Header */}
       <div className="space-y-4">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0071E3]/10 border border-[#0071E3]/20 text-[#0071E3] text-xs font-bold shadow-sm">
           <Users className="w-3.5 h-3.5" />
           <span>Leadership & Advisors</span>
         </div>
-        
+
         <h1 className="text-4xl sm:text-5xl font-extrabold text-[#1D1D1F] tracking-tight">
           The Team Behind <span className="apple-blue-text-light">Agentic Customs</span>
         </h1>
@@ -35,7 +35,7 @@ export default function TeamPage({ onOpenModal }) {
         </div>
 
         <div className="inline-block px-4 py-2 rounded-full bg-black/5 border border-black/10 text-xs text-[#1D1D1F] font-mono font-semibold">
-          [ Placeholder — Team Details Coming Soon ]
+          [ We are brewing - Will share soon... ]
         </div>
 
         <div className="pt-6 border-t border-black/5 max-w-sm mx-auto">
