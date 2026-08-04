@@ -11,15 +11,62 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
     note: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setErrorMsg('');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: 'a9693b60-de9c-4d25-b339-8df5d7ff8ed5',
+          email_to: 'hellorachitlohani@gmail.com',
+          subject: mode === 'deck' ? `Pitch Deck Request from ${formData.name}` : `Demo Request from ${formData.name}`,
+          from_name: formData.name,
+          replyto: formData.email,
+          request_type: mode === 'deck' ? 'Investor Pitch Deck' : 'Schedule Product Demo',
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          role: formData.role,
+          message: formData.note
+        })
+      });
+
+      const result = await response.json();
+      if (result.success || response.ok) {
+        setSubmitted(true);
+      } else {
+        // Fallback: send via mailto link if API key is not configured yet
+        const mailSubject = encodeURIComponent(mode === 'deck' ? `Pitch Deck Request: ${formData.company}` : `Demo Request: ${formData.company}`);
+        const mailBody = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company}\nRole: ${formData.role}\nNote: ${formData.note}`);
+        window.location.href = `mailto:hellorachitlohani@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+        setSubmitted(true);
+      }
+    } catch (err) {
+      // Fallback to mailto link
+      const mailSubject = encodeURIComponent(mode === 'deck' ? `Pitch Deck Request: ${formData.company}` : `Demo Request: ${formData.company}`);
+      const mailBody = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company}\nRole: ${formData.role}\nNote: ${formData.note}`);
+      window.location.href = `mailto:hellorachitlohani@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
     setSubmitted(false);
+    setErrorMsg('');
     onClose();
   };
 
@@ -130,9 +177,10 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-full bg-[#0071E3] hover:bg-[#0077ED] text-white font-bold text-xs shadow-md shadow-blue-500/15 flex items-center justify-center gap-2 transition-all mt-4"
+                disabled={isSubmitting}
+                className="w-full py-3 rounded-full bg-[#0071E3] hover:bg-[#0077ED] text-white font-bold text-xs shadow-md shadow-blue-500/15 flex items-center justify-center gap-2 transition-all mt-4 disabled:opacity-50"
               >
-                <span>Submit Request</span>
+                <span>{isSubmitting ? 'Sending Request...' : 'Submit Request'}</span>
                 <Send className="w-3.5 h-3.5" />
               </button>
 
