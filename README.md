@@ -1,6 +1,6 @@
 # Agentic Customs — Enterprise AI for Global Trade Compliance
 
-**Author & Creator**: Rachit Lohani  
+**Author & Creator**: Qubere inc.  
 **Architecture**: Governed Multi-Agent AI Platform for Global Trade & Customs Operations  
 **Design**: Apple Minimalist Dark Mode Aesthetic  
 
