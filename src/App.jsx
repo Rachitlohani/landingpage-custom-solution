@@ -16,12 +16,42 @@ import TeamPage from './pages/TeamPage';
 import AiCustomsCompliancePage from './pages/AiCustomsCompliancePage';
 import UsImportEntryReadinessPage from './pages/UsImportEntryReadinessPage';
 import EvidenceBackedAiArticlePage from './pages/EvidenceBackedAiArticlePage';
+import LogicalArchitecturePage from './pages/LogicalArchitecturePage';
 import KnowledgeGraph from './components/KnowledgeGraph';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('home');
+  const getInitialTab = () => {
+    const path = window.location.pathname.replace('/', '').toLowerCase();
+    const hash = window.location.hash.replace('#', '').toLowerCase();
+    const target = path || hash;
+    
+    if (['architecture', 'ai-customs-compliance', 'us-import-entry-readiness', 'evidence-backed-ai', 'team', 'thesis', 'graph'].includes(target)) {
+      return target;
+    }
+    return 'home';
+  };
+
+  const [activeTab, setActiveTabState] = useState(getInitialTab);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState('deck');
+
+  // Sync tab changes to URL hash and browser history for shareable links
+  const setActiveTab = (tab) => {
+    setActiveTabState(tab);
+    if (tab === 'home') {
+      window.history.pushState(null, '', '/');
+    } else {
+      window.history.pushState(null, '', `/#${tab}`);
+    }
+  };
+
+  React.useEffect(() => {
+    const handlePopState = () => {
+      setActiveTabState(getInitialTab());
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const handleOpenModal = (mode = 'deck') => {
     setModalMode(mode);
@@ -46,6 +76,10 @@ export default function App() {
               setActiveTab={setActiveTab} 
               onOpenModal={handleOpenModal} 
             />
+          )}
+
+          {activeTab === 'architecture' && (
+            <LogicalArchitecturePage onOpenModal={handleOpenModal} />
           )}
 
           {activeTab === 'ai-customs-compliance' && (
