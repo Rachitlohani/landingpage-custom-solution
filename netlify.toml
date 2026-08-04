@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "https://autonomous-trade.netlify.app/*"
+  to = "https://qubere.ai/:splat"
+  status = 301
+  force = true
