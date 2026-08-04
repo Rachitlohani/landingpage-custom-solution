@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { X, CheckCircle2, Send, Lock, Sparkles, FileText, Calendar } from 'lucide-react';
+import { X, CheckCircle2, Send, Lock, FileText, Calendar } from 'lucide-react';
+
+const FORM_NAME = 'access-request';
 
 export default function Modal({ isOpen, onClose, mode = 'deck' }) {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -11,17 +15,17 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
     note: ''
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
-
   if (!isOpen) return null;
+
+  const requestType = mode === 'deck' ? 'Investor Pitch Deck' : 'Schedule Product Demo';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setErrorMsg('');
+    setSending(true);
+    setError('');
 
     try {
+      // Direct submission via Web3Forms using provided API Key
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
@@ -34,7 +38,7 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
           subject: mode === 'deck' ? `Pitch Deck Request from ${formData.name}` : `Demo Request from ${formData.name}`,
           from_name: formData.name,
           replyto: formData.email,
-          request_type: mode === 'deck' ? 'Investor Pitch Deck' : 'Schedule Product Demo',
+          request_type: requestType,
           name: formData.name,
           email: formData.email,
           company: formData.company,
@@ -47,26 +51,35 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
       if (result.success || response.ok) {
         setSubmitted(true);
       } else {
-        // Fallback: send via mailto link if API key is not configured yet
-        const mailSubject = encodeURIComponent(mode === 'deck' ? `Pitch Deck Request: ${formData.company}` : `Demo Request: ${formData.company}`);
-        const mailBody = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company}\nRole: ${formData.role}\nNote: ${formData.note}`);
-        window.location.href = `mailto:hellorachitlohani@gmail.com?subject=${mailSubject}&body=${mailBody}`;
-        setSubmitted(true);
+        // Fallback: try Netlify form submission or mailto fallback
+        const body = new URLSearchParams(new FormData(e.target)).toString();
+        const netlifyResp = await fetch('/__forms.html', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body
+        });
+
+        if (netlifyResp.ok) {
+          setSubmitted(true);
+        } else {
+          throw new Error('Web3Forms and Netlify submissions failed');
+        }
       }
-    } catch (err) {
-      // Fallback to mailto link
+    } catch {
+      // Fallback: trigger mailto pre-filled mail client
       const mailSubject = encodeURIComponent(mode === 'deck' ? `Pitch Deck Request: ${formData.company}` : `Demo Request: ${formData.company}`);
       const mailBody = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company}\nRole: ${formData.role}\nNote: ${formData.note}`);
       window.location.href = `mailto:hellorachitlohani@gmail.com?subject=${mailSubject}&body=${mailBody}`;
       setSubmitted(true);
     } finally {
-      setIsSubmitting(false);
+      setSending(false);
     }
   };
 
   const handleReset = () => {
     setSubmitted(false);
-    setErrorMsg('');
+    setError('');
+    setFormData({ name: '', email: '', company: '', role: '', note: '' });
     onClose();
   };
 
@@ -115,12 +128,30 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-3.5 mt-6">
+            <form
+              name={FORM_NAME}
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              onSubmit={handleSubmit}
+              className="space-y-3.5 mt-6"
+            >
+              <input type="hidden" name="form-name" value={FORM_NAME} />
+              <input type="hidden" name="request_type" value={requestType} />
+              <input type="hidden" name="subject" value={`New ${requestType} request from ${formData.company || formData.name || 'website visitor'}`} />
+              <p className="hidden">
+                <label>
+                  Don&apos;t fill this out: <input name="bot-field" tabIndex={-1} autoComplete="off" />
+                </label>
+              </p>
+
               <div>
                 <label className="block text-xs font-bold text-[#1D1D1F] mb-1">Full Name *</label>
                 <input
                   required
                   type="text"
+                  name="name"
+                  autoComplete="name"
                   placeholder="e.g. Sarah Jenkins"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -133,6 +164,8 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
                 <input
                   required
                   type="email"
+                  name="email"
+                  autoComplete="email"
                   placeholder="name@company.com or name@fund.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -146,6 +179,8 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
                   <input
                     required
                     type="text"
+                    name="company"
+                    autoComplete="organization"
                     placeholder="Company / Fund Name"
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
@@ -156,6 +191,7 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
                   <label className="block text-xs font-bold text-[#1D1D1F] mb-1">Role / Focus</label>
                   <input
                     type="text"
+                    name="role"
                     placeholder="e.g. GP, VP Trade, CTO"
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
@@ -168,6 +204,7 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
                 <label className="block text-xs font-bold text-[#1D1D1F] mb-1">Message / Note</label>
                 <textarea
                   rows="2"
+                  name="note"
                   placeholder="Any specific focus area or interest..."
                   value={formData.note}
                   onChange={(e) => setFormData({ ...formData, note: e.target.value })}
@@ -175,12 +212,18 @@ export default function Modal({ isOpen, onClose, mode = 'deck' }) {
                 />
               </div>
 
+              {error && (
+                <p className="text-[11px] font-semibold text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-2">
+                  {error}
+                </p>
+              )}
+
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full py-3 rounded-full bg-[#0071E3] hover:bg-[#0077ED] text-white font-bold text-xs shadow-md shadow-blue-500/15 flex items-center justify-center gap-2 transition-all mt-4 disabled:opacity-50"
+                disabled={sending}
+                className="w-full py-3 rounded-full bg-[#0071E3] hover:bg-[#0077ED] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-xs shadow-md shadow-blue-500/15 flex items-center justify-center gap-2 transition-all mt-4"
               >
-                <span>{isSubmitting ? 'Sending Request...' : 'Submit Request'}</span>
+                <span>{sending ? 'Sending…' : 'Submit Request'}</span>
                 <Send className="w-3.5 h-3.5" />
               </button>
 
