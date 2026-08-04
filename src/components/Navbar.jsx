@@ -6,9 +6,6 @@ export default function Navbar({ activeTab, setActiveTab, onOpenModal }) {
 
   const navLinks = [
     { id: 'home', label: 'Overview' },
-    { id: 'ai-customs-compliance', label: 'AI Customs Compliance' },
-    { id: 'us-import-entry-readiness', label: 'Import Readiness' },
-    { id: 'evidence-backed-ai', label: 'Why Evidence-Backed AI' },
     { id: 'team', label: 'Why Qubere' },
     { id: 'thesis', label: 'Thesis' },
   ];

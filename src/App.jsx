@@ -75,7 +75,10 @@ export default function App() {
           )}
 
           {activeTab === 'thesis' && (
-            <ThesisPage onOpenModal={handleOpenModal} />
+            <ThesisPage 
+              setActiveTab={setActiveTab} 
+              onOpenModal={handleOpenModal} 
+            />
           )}
 
           {activeTab === 'team' && (

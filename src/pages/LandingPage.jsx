@@ -56,12 +56,6 @@ export default function LandingPage({ setActiveTab, onOpenModal }) {
       {/* HERO SECTION */}
       <section className="relative pt-12 md:pt-16 text-center max-w-5xl mx-auto px-4 space-y-6">
         
-        {/* Top Pill Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0071E3]/10 border border-[#0071E3]/20 text-[#0071E3] text-xs font-bold shadow-sm">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>AI Customs Compliance Software</span>
-        </div>
-
         {/* Main Headline (H1) */}
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#1D1D1F] tracking-tight leading-[1.12]">
           AI customs compliance that turns trade documents <br className="hidden sm:inline" />
@@ -93,19 +87,11 @@ export default function LandingPage({ setActiveTab, onOpenModal }) {
           </button>
         </div>
 
-        {/* Key Stats Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-16 border-t border-black/10 text-left">
-          {stats.map((stat, idx) => (
-            <div key={idx} className="apple-card-light p-6">
-              <div className="text-3xl sm:text-4xl font-extrabold text-[#1D1D1F] tracking-tight">
-                {stat.value}
-              </div>
-              <div className="text-xs font-bold text-[#1D1D1F] mt-1">{stat.label}</div>
-              <div className="text-[11px] text-[#86868B] mt-0.5">{stat.sub}</div>
-            </div>
-          ))}
-        </div>
+
+
       </section>
+
+
 
       {/* FEATURED ADVANCED REACT COMPONENT: INTERACTIVE KNOWLEDGE GRAPH */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6">
