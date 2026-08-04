@@ -59,18 +59,18 @@ export default function LandingPage({ setActiveTab, onOpenModal }) {
         {/* Top Pill Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0071E3]/10 border border-[#0071E3]/20 text-[#0071E3] text-xs font-bold shadow-sm">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>The 1st AI-Native Global Customs Operating Layer</span>
+          <span>AI Customs Compliance Software</span>
         </div>
 
-        {/* Main Headline */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#1D1D1F] tracking-tight leading-[1.08]">
-          Autonomous Trade Compliance <br className="hidden sm:inline" />
-          <span className="apple-blue-text-light">Operating at Scale.</span>
+        {/* Main Headline (H1) */}
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#1D1D1F] tracking-tight leading-[1.12]">
+          AI customs compliance that turns trade documents <br className="hidden sm:inline" />
+          <span className="apple-blue-text-light">into filing-ready decisions.</span>
         </h1>
 
-        {/* Subtitle */}
-        <p className="text-base sm:text-lg text-[#6E6E73] max-w-2xl mx-auto font-normal leading-relaxed">
-          Agentic Customs connects regulations, enterprise master data, and human expertise to automate complex cross-border trade declarations with enterprise governance.
+        {/* Hero Copy (Paragraph) */}
+        <p className="text-base sm:text-lg text-[#6E6E73] max-w-3xl mx-auto font-normal leading-relaxed">
+          Extract trade data, propose HS classifications and duties, validate regulatory requirements, route exceptions, and preserve an audit trail—without replacing your broker or existing filing system.
         </p>
 
         {/* Hero CTAs */}

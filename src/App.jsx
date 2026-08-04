@@ -13,6 +13,9 @@ import Modal from './components/Modal';
 import LandingPage from './pages/LandingPage';
 import ThesisPage from './pages/ThesisPage';
 import TeamPage from './pages/TeamPage';
+import AiCustomsCompliancePage from './pages/AiCustomsCompliancePage';
+import UsImportEntryReadinessPage from './pages/UsImportEntryReadinessPage';
+import EvidenceBackedAiArticlePage from './pages/EvidenceBackedAiArticlePage';
 import KnowledgeGraph from './components/KnowledgeGraph';
 
 export default function App() {
@@ -43,6 +46,18 @@ export default function App() {
               setActiveTab={setActiveTab} 
               onOpenModal={handleOpenModal} 
             />
+          )}
+
+          {activeTab === 'ai-customs-compliance' && (
+            <AiCustomsCompliancePage onOpenModal={handleOpenModal} />
+          )}
+
+          {activeTab === 'us-import-entry-readiness' && (
+            <UsImportEntryReadinessPage onOpenModal={handleOpenModal} />
+          )}
+
+          {activeTab === 'evidence-backed-ai' && (
+            <EvidenceBackedAiArticlePage onOpenModal={handleOpenModal} />
           )}
 
           {activeTab === 'graph' && (

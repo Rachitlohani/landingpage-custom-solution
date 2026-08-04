@@ -6,9 +6,11 @@ export default function Navbar({ activeTab, setActiveTab, onOpenModal }) {
 
   const navLinks = [
     { id: 'home', label: 'Overview' },
-    { id: 'graph', label: 'Knowledge Graph' },
-    { id: 'thesis', label: 'Thesis & Vision' },
-    { id: 'team', label: 'Team' },
+    { id: 'ai-customs-compliance', label: 'AI Customs Compliance' },
+    { id: 'us-import-entry-readiness', label: 'Import Readiness' },
+    { id: 'evidence-backed-ai', label: 'Why Evidence-Backed AI' },
+    { id: 'team', label: 'Why Qubere' },
+    { id: 'thesis', label: 'Thesis' },
   ];
 
   return (
@@ -23,8 +25,8 @@ export default function Navbar({ activeTab, setActiveTab, onOpenModal }) {
           <div className="w-8 h-8 rounded-full bg-[#0071E3]/10 border border-[#0071E3]/20 flex items-center justify-center group-hover:bg-[#0071E3]/20 transition-all">
             <Shield className="w-4 h-4 text-[#0071E3]" />
           </div>
-          <span className="text-base font-bold text-[#1D1D1F] tracking-tight group-hover:text-[#0071E3] transition-colors">
-            Agentic Customs
+          <span className="text-lg font-extrabold text-[#1D1D1F] tracking-tight group-hover:text-[#0071E3] transition-colors">
+            Qubere
           </span>
         </div>
 
