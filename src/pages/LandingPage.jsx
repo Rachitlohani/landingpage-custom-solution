@@ -21,10 +21,10 @@ import {
 
 export default function LandingPage({ setActiveTab, onOpenModal }) {
   const stats = [
-    { value: "10x", label: "Faster Declaration Speed", sub: "Sub-second multi-agent pipeline" },
-    { value: "99.4%", label: "Audit-Ready Accuracy", sub: "Grounded in RAG & knowledge graphs" },
-    { value: "$12B+", label: "Trade Value Coverage", sub: "Across US, EU, UK & APAC regulations" },
-    { value: "100%", label: "Deterministic Safety", sub: "Hard compliance rules & human audit" },
+    { value: "$5.3T", label: "US Annual Trade Volume", sub: "Importers facing complex CBP tariff compliance" },
+    { value: "$32T+", label: "Global Trade Market", sub: "Cross-border merchandise flowing through customs daily" },
+    { value: "$30B+", label: "Lost in Misclassification", sub: "Annual penalties, overpaid duties & border delays" },
+    { value: "98%", label: "Manual Customs Friction", sub: "Filing backlogs prime for multi-agent automation" },
   ];
 
   const pillars = [
