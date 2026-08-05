@@ -24,9 +24,18 @@ import KnowledgeGraph from './components/KnowledgeGraph';
 
 export default function App() {
   const getInitialTab = () => {
+    const hostname = window.location.hostname.toLowerCase();
     const path = window.location.pathname.replace('/', '').toLowerCase();
     const hash = window.location.hash.replace('#', '').toLowerCase();
     const target = path || hash;
+
+    // Check if user is accessing via blog.qubere.ai or blog.qubere.com subdomain
+    if (hostname.startsWith('blog.') || hostname.startsWith('blog-')) {
+      if (['architecture', 'ai-customs-compliance', 'us-import-entry-readiness', 'evidence-backed-ai', 'trade-knowledge-graph', 'product', 'team', 'thesis', 'graph'].includes(target)) {
+        return target;
+      }
+      return 'blog';
+    }
     
     if (['architecture', 'ai-customs-compliance', 'us-import-entry-readiness', 'evidence-backed-ai', 'trade-knowledge-graph', 'blog', 'blog-hub', 'product', 'team', 'thesis', 'graph'].includes(target)) {
       return target;

@@ -3,3 +3,10 @@
   to = "https://qubere.ai/:splat"
   status = 301
   force = true
+
+# SPA single-page rewrite for Netlify routing across subdomains (e.g. blog.qubere.ai)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
