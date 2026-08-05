@@ -175,24 +175,7 @@ export default function ProductSuitePage({ onOpenModal }) {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-16">
-      
-      {/* HEADER SECTION */}
-      <section className="text-center space-y-4 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0071E3]/10 border border-[#0071E3]/20 text-[#0071E3] text-xs font-bold shadow-sm">
-          <Cpu className="w-3.5 h-3.5" />
-          <span>Product Suite · Autonomous Trade Operating Layer</span>
-        </div>
-
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-[#1D1D1F] tracking-tight leading-tight">
-          Intelligent Tools Built For <br />
-          <span className="apple-blue-text-light">Modern Trade & Customs.</span>
-        </h1>
-
-        <p className="text-sm sm:text-base text-[#6E6E73] font-medium leading-relaxed max-w-2xl mx-auto">
-          Explore Qubere’s modular product suite—from autonomous entry clearance and AI classification to tariff simulation and automated duty drawback recovery.
-        </p>
-      </section>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-12">
 
       {/* PRODUCT MODULES GRID */}
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
