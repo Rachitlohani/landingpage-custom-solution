@@ -57,6 +57,14 @@ export default function ThesisPage({ setActiveTab, onOpenModal }) {
               <Sparkles className="w-3.5 h-3.5 text-[#0071E3]" />
               <span>Why Evidence-Backed AI</span>
             </button>
+
+            <button
+              onClick={() => setActiveTab('trade-knowledge-graph')}
+              className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#0071E3] text-white shadow-sm hover:bg-[#0077ED] transition-all flex items-center gap-1.5 border border-[#0071E3]"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Blog: Trade Knowledge Graph</span>
+            </button>
           </div>
         </div>
         

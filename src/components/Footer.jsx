@@ -27,6 +27,9 @@ export default function Footer({ setActiveTab, onOpenModal }) {
           <button onClick={() => setActiveTab('thesis')} className="hover:text-[#1D1D1F] transition-colors">
             Thesis
           </button>
+          <button onClick={() => setActiveTab('trade-knowledge-graph')} className="hover:text-[#0071E3] font-bold transition-colors">
+            Blog: Trade Graph
+          </button>
           <button onClick={() => setActiveTab('team')} className="hover:text-[#1D1D1F] transition-colors">
             Team
           </button>

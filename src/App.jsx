@@ -16,6 +16,9 @@ import TeamPage from './pages/TeamPage';
 import AiCustomsCompliancePage from './pages/AiCustomsCompliancePage';
 import UsImportEntryReadinessPage from './pages/UsImportEntryReadinessPage';
 import EvidenceBackedAiArticlePage from './pages/EvidenceBackedAiArticlePage';
+import TradeKnowledgeGraphBlogPage from './pages/TradeKnowledgeGraphBlogPage';
+import BlogHubPage from './pages/BlogHubPage';
+import ProductSuitePage from './pages/ProductSuitePage';
 import LogicalArchitecturePage from './pages/LogicalArchitecturePage';
 import KnowledgeGraph from './components/KnowledgeGraph';
 
@@ -25,7 +28,7 @@ export default function App() {
     const hash = window.location.hash.replace('#', '').toLowerCase();
     const target = path || hash;
     
-    if (['architecture', 'ai-customs-compliance', 'us-import-entry-readiness', 'evidence-backed-ai', 'team', 'thesis', 'graph'].includes(target)) {
+    if (['architecture', 'ai-customs-compliance', 'us-import-entry-readiness', 'evidence-backed-ai', 'trade-knowledge-graph', 'blog', 'blog-hub', 'product', 'team', 'thesis', 'graph'].includes(target)) {
       return target;
     }
     return 'home';
@@ -92,6 +95,18 @@ export default function App() {
 
           {activeTab === 'evidence-backed-ai' && (
             <EvidenceBackedAiArticlePage onOpenModal={handleOpenModal} />
+          )}
+
+          {(activeTab === 'blog' || activeTab === 'blog-hub') && (
+            <BlogHubPage setActiveTab={setActiveTab} onOpenModal={handleOpenModal} />
+          )}
+
+          {activeTab === 'product' && (
+            <ProductSuitePage onOpenModal={handleOpenModal} />
+          )}
+
+          {activeTab === 'trade-knowledge-graph' && (
+            <TradeKnowledgeGraphBlogPage onOpenModal={handleOpenModal} />
           )}
 
           {activeTab === 'graph' && (
