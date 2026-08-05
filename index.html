@@ -47,7 +47,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   </head>
   <body class="bg-[#F5F5F7] text-[#1D1D1F] font-['Plus_Jakarta_Sans',sans-serif] antialiased selection:bg-blue-500/20 selection:text-[#0071E3] min-h-screen">
-    <div id="root"></div>
+    <div id="root">
+      <!-- Static HTML Crawl fallback for Googlebot, cURL, AI agents, and non-JS clients -->
+      <article style="max-width: 900px; margin: 0 auto; padding: 2rem; font-family: sans-serif;">
+        <header>
+          <h1>Qubere — Autonomous Trade Operating Layer & AI Customs Compliance</h1>
+          <p><strong>Enterprise AI software for document-to-filing readiness, trade knowledge graphs, and governed customs clearance.</strong></p>
+        </header>
+
+        <section>
+          <h2>Company Overview & Leadership</h2>
+          <p>Qubere turns commercial invoices, packing lists, and bills of lading into evidence-backed, review-ready import decisions before submission to customs authorities like U.S. Customs and Border Protection (CBP).</p>
+          <ul>
+            <li><strong>Rachit Lohani (Co-Founder):</strong> Former CPTO at E2open and Paylocity; executive engineering leadership at Atlassian and Intuit.</li>
+            <li><strong>Krishna Bandi (Co-Founder):</strong> 30+ years in global supply chain and customs filing; former Head of Customs Filing at E2open and product leader at BlueJay.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Qubere Product Suite</h2>
+          <ul>
+            <li><strong>Customs Clearance Engine:</strong> Ingests shipping documents, parses line items, cross-reconciles values, and automates 7501 Entry Summaries with real-time PGA screening (FDA, EPA, FCC).</li>
+            <li><strong>Customs Brokerage OS:</strong> Operational workbench for licensed customs brokers with confidence-based exception queues and side-by-side evidence inspection.</li>
+            <li><strong>Trade Advisory & Policy Agent:</strong> Governs USMCA rules of origin, Section 301/232 tariff exclusions, ADD/CVD screening, and binding CROSS rulings.</li>
+            <li><strong>Tariff & Duty Simulator:</strong> Real-time landed cost scenario modeling across alternative origin countries and HTS classifications.</li>
+            <li><strong>Tariff Refunds & PSC Claims:</strong> Scans historic import filings for retroactively granted exclusions and automated Post-Summary Correction (PSC) filings.</li>
+            <li><strong>Duty Drawback Automation:</strong> Matches import entries with export bills of lading to claim up to 99% duty refunds under TFTEA regulations.</li>
+            <li><strong>Automated Compliance Audit Engine:</strong> Continuous real-time entry scanning for 19 U.S.C. § 1484 Reasonable Care compliance defense.</li>
+            <li><strong>AI Classification Engine:</strong> Classifies products into 10-digit HTSUS codes with legal General Rules of Interpretation (GRI 1-6) grounding.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Core Research & Whitepapers</h2>
+          <article>
+            <h3>Building an AI-Native Trade Knowledge Graph: Why Document AI Isn't Enough</h3>
+            <p>Today's trade compliance systems think in terms of documents. Qubere thinks in terms of knowledge. Raw shipping uploads create an ephemeral transaction graph containing connected Supplier, Product, HTS Code, and Port nodes. Once filed, verified durable entities are promoted to the permanent Enterprise Knowledge Graph while transient document noise is pruned.</p>
+          </article>
+          <article>
+            <h3>Why Customs AI Must Be Evidence-Backed Before It Is Autonomous</h3>
+            <p>General-purpose LLMs predict likely tokens, but in customs compliance, ungrounded AI leads to costly misclassifications and CBP penalties. Qubere decouples decision proposals from legal verification by grounding every proposal in bounding-box document provenance and binding CROSS ruling citations.</p>
+          </article>
+          <article>
+            <h3>Qubere Logical Architecture</h3>
+            <p>A 6-layer agentic architecture spanning Experience API, Zero-Trust Tenant Boundary, Stateful Durable Control Plane (Temporal workflow execution), Intelligence Services, Immutable Evidence Object Storage, and Governed Human-in-the-Loop Review.</p>
+          </article>
+        </section>
+
+        <footer>
+          <p>© Qubere Inc. All rights reserved. Enterprise AI for Global Commerce and Customs Compliance. Contact: demo@qubere.ai</p>
+        </footer>
+      </article>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
